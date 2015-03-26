@@ -4,15 +4,21 @@
         <link href="bootstrap.css" rel="stylesheet" />
         <title>My Projects</title>
         <link rel="shortcut icon" href="favicon.ico" />
+        <script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
         <style>
             .jumbotron {
                 background-color: #B2E0E0;
                 padding-top: 120px;
-                padding-bottom: 90px;
+                padding-bottom: 90px
             }
             .col-md-2 {
                 border: 1px solid black;
-                padding: 10px 10px 10px 10px;
+                padding: 10px 10px 10px 10px
+            }
+            .thumbnail{
+                width: 300px;
+                height: 250px;
+                overflow: auto
             }
         </style>
     </head>
@@ -47,16 +53,26 @@
             <div class="row">
                 <div class="col-xs-6 col-md-3">
                     <a href="http://www.cbsalling.com/projects/rabbit_scrapy.html" class="thumbnail">
-                        <img src="http://i.imgur.com/8sglATL.png" width=500px>
+                        <img src="http://i.imgur.com/8sglATL.png" width=350px \>
                     </a>
                     <div class="caption">
                         <h3>Web Scraping</h3>
                         <p>Using the python Scrapy framework to extract data from the rabbits subreddit</p>
                     </div>
                 </div>
+            
+                <div class="col-xs-6 col-md-3">
+                    <a href="http://www.cbsalling.com/projects/naive_bayes.html" class="thumbnail">
+                        <img src="http://i.imgur.com/lqWzeGx.png" \>
+                    </a>
+                    <div class="caption">
+                        <h3>Na&iumlve Bayes</h3>
+                        <p>A quick introduction to machine learning and Bayesian mathematics via a specific classification algorithm</p>
+                    </div>
+                </div>
             </div>
+            
             <!--
-            <div class="col-md-2">Project 2</div>
             <div class="col-md-2">Project 3</div>
             <div class="col-md-2">Project 4</div>
             <div class="col-md-2">Project 5</div>
