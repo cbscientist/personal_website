@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="css/bootstrap.css" rel="stylesheet" />
+        <title>My Projects</title>
+        <link href="favicon.ico" rel="shortcut icon" />
+        <style>
+            .code_bit {
+                font-family: monospace;
+                font-size: 15px;
+            }
+            .code_well {
+                padding: 10px 10px 10px 10px;
+                font-family: monospace;
+                background-color: #B2E0E0;
+            }
+            .tab1 {
+                padding-left: 2em;
+            }
+            .tab2 {
+                padding-left: 4em;
+            }
+            .tab3 {
+                padding-left: 6em;
+            }
+        </style>
+    </head>
+    
+    <body>
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+                    <ul class="nav navbar-nav navbar-left">
+                        <li><a href="http://www.cbsalling.com/">About Me</a></li>
+                        <li><a href="http://www.cbsalling.com/projects.html">Projects</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="http://www.linkedin.com/in/cbsalling" target="_blank">LinkedIn</a></li>
+                        <li><a href="https://github.com/cbscientist" target="_blank">Github</a></li>
+                        <li><a href="https://twitter.com/cbscientist" target="_blank">Twitter</a></li>
+                    </ul>
+            </div><!-- /.container-fluid -->
+        </nav>
+        
+        
+        <div class="row" style="padding-top: 120px">
+            <div class="col-md-1"></div>
+            
+            <div class="col-md-8">
+                <h3><u><a href="http://www.cbsalling.com/projects.html">Back to Projects</a></u></h3>
+            </div>
+        </div>
+        
+        
+        <div class="row" style="padding-top: 45px">
+            <div class="col-md-1"></div>
+            
+            <div class="col-md-9">
+                <h2>Scraping the Rabbits Subreddit</h2>
+                <h4>An ostensibly metaphorically and almost literally fluffy project</h4>
+                <h5>[Click <a href="https://github.com/cbscientist/rabbit_scrapy" target="_blank">here</a> for the Github repository containing the code used in this post]</h5>
+            </div>
+        </div>
+        
+        
+        <div class="row" style="padding-top: 30px">
+            <div class="col-md-1"></div>
+            
+            <div class="col-md-9">
+                <p>This all started from a desire to scrape airline data from travel websites like Expedia, which I still plan to do, but I thought I would learn the basics of web scraping using a website I'm completely not embarrased to admit that I frequent fairly often. That's right, <a href = "http://www.reddit.com/r/rabbits/" target="_blank">the rabbits subreddit</a>.</p>
+                <p>I landed on using the python <a href="http://www.scrapy.org" target="_blank">Scrapy</a> framework as my tool of choice. Python seems to be the direction in which people are headed for data science, R being broad in its statistical capabilities but not always very smooth in its execution and limited in the fact that only statisticians really use it. So I'm trying to force myself to keep using Python. Although you can apparently scrape web data using an R library called <a href="http://blog.rstudio.org/2014/11/24/rvest-easy-web-scraping-with-r/" target="_blank">rvest</a>. And there are libraries like <a href="http://www.crummy.com/software/BeautifulSoup/" target="_blank">Beautiful Soup</a>, written in Python, that have been around for a while which can also be used for web scraping.</p>
+                <p>The beautiful thing about Scrapy is that it does a lot of the work so that all you really have to do (after installing Scrapy) is create your Scrapy project from within the terminal, using the <strong>scrapy startproject project_name</strong> command, alter the items.py file to provide your list of values you want to extract, and create your spider, the actual python script that picks over html code and parses the values to give you your items.</p>
+                <p>I started with a BaseSpider, which allows you to scrape data from a single page.</p>
+            </div>
+        </div>
+        
+        
+        <div class="row">
+            <div class="col-md-1"></div>
+            
+            <div class="col-md-9">
+                <div class="code_well">
+                    <p>import scrapy<br />
+                    from rabbit_subr.items import *<br />
+                    <br />
+                    class RabbitSubRSpider(scrapy.Spider):<br />
+                    <span class="tab1">name = "rabbit_fp"<br /></span>
+                    <span class="tab1">allowed_domains = ["reddit.com"]<br /></span>
+                    <span class="tab1">start_urls = ["http://www.reddit.com/r/Rabbits/"]<br /></span>
+                    <br />
+                    <span class="tab1">def parse(self, response):<br /></span>
+                    <span class="tab2">for sel in response.xpath('//p[@class = "title"]/a[@*]'):<br /></span>
+                    <span class="tab3">item = RabbitSubRPost()<br /></span>
+                    <span class="tab3">item['post_title'] = sel.xpath('text()').extract()<br /></span>
+                    <span class="tab3">yield item</span>
+                </div>
+                </p>
+            </div>
+        </div>
+        
+        
+        <div class="row">
+            <div class="col-md-1"></div>
+            
+            <div class="col-md-9">
+                <p>However, the rabbits subreddit, and more importantly, the travel websites that I intend to extract information from, have pagination. This required the use of a CrawlSpider, another Scrapy spider type that has the mechanism to follow links on the page given by your start url. The following code starts on the front page of the subreddit and follows the "next" link at the bottom of the page through all the subsequent "hot" posts.</p>
+            </div>
+        </div>
+    
+    
+        <div class="row">
+            <div class="col-md-1"></div>
+            
+            <div class="col-md-9">
+                <div class="code_well">
+                    from scrapy.contrib.spiders import CrawlSpider, Rule<br />
+                    from scrapy.contrib.linkextractors.lxmlhtml import LxmlLinkExtractor<br />
+                    from rabbit_subr2.items import *<br />
+                    <br />
+                    class RabbitSubRSpider(CrawlSpider):<br />
+                    <span class="tab1">name = "rabbit"<br /></span>
+                    <span class="tab1">allowed_domains = ["reddit.com"]<br /></span>
+                    <span class="tab1">start_urls = ["http://www.reddit.com/r/Rabbits"]<br /></span>
+                    <br />
+                    <span class="tab1">rules = ( Rule( LxmlLinkExtractor( restrict_xpaths = ('//a[@rel = "nofollow next"]', )),<br /></span>
+                    <span class="tab2">callback = 'parse_items', follow = True),)<br /></span>
+                    <br />
+                    <span class="tab1">def parse_items(self, response):<br /></span>
+                    <span class="tab2">for sel in response.xpath('//p[@class = "title"]/a[@*]'):<br /></span>
+                    <span class="tab3">item = RabbitSubRItem()<br /></span>
+                    <span class="tab3">item['post_title'] = sel.xpath('text()').extract()<br />
+                    <span class="tab3">yield item<br /></span>
+                      
+                </div>
+                </p>
+            </div>
+        </div>        
+        
+        <div class="row">
+            <div class="col-md-1"></div>
+            
+            <div class="col-md-9">
+                <p>Finally, after doing some basic cleaning (removing punctuation, converting the lowercase, and so on), I put the resulting dataset through wordle to create a word cloud. The color scheme is called "Organic Carrot", which I thought was appropriate. The rabbits subreddit seems like a pretty happy place, huh?</p>
+                <p><img src="http://i.imgur.com/8sglATL.png" /></p>
+            </div>
+        </div>
+        
+        <div style="height: 80px"></div>
+
+    </body>
+</html>

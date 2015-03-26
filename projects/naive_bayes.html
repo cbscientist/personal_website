@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="css/bootstrap.css" rel="stylesheet" />
+        <link href="favicon.ico" rel="shortcut icon" />
+        <title>My Projects</title>
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({
+                TeX: { equationNumbers: { autoNumber: "AMS" } }
+            });
+        </script>
+        <script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+        <style>
+            .code_well {
+                padding: 10px 10px 10px 10px;
+                font-family: monospace;
+                background-color: #B2E0E0;
+                margin-top: 15px;
+                margin-bottom: 15px;
+            }
+        </style>
+    </head>
+    
+    <body>
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+                    <ul class="nav navbar-nav navbar-left">
+                        <li><a href="http://www.cbsalling.com/">About Me</a></li>
+                        <li><a href="http://www.cbsalling.com/projects.html">Projects</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="http://www.linkedin.com/in/cbsalling" target="_blank">LinkedIn</a></li>
+                        <li><a href="https://github.com/cbscientist" target="_blank">Github</a></li>
+                        <li><a href="https://twitter.com/cbscientist" target="_blank">Twitter</a></li>
+                    </ul>
+            </div><!-- /.container-fluid -->
+        </nav>
+        
+        
+        <div class="row" style="padding-top: 120px">
+            <div class="col-md-1"></div>
+            
+            <div class="col-md-8">
+                <h3><u><a href="http://www.cbsalling.com/projects.html">Back to Projects</a></u></h3>
+            </div>
+        </div>
+        
+        
+        <div class="row" style="padding-top: 45px">
+            <div class="col-md-1"></div>
+            
+            <div class="col-md-9">
+                <h2>Na&iumlve Bayes</h2>
+                <h4>A quick introduction to machine learning and Bayesian mathematics via a specific classification algorithm</h4>
+            </div>
+        </div>
+        
+        
+        <div class="row" style="padding-top: 30px">
+            <div class="col-md-1"></div>
+            
+            <div class="col-md-9">
+                <p>When I began digging into machine learning algorithms, one of the first techniques I ran into was called Na&iumlve Bayes. Both the implementation and the theory behind this technique is fairly simple. What makes it remarkable is that despite its simplicity, it is pretty powerful and is widely used for things like spam filters and document classification.</p>
+                <p>Out objective is to calculate the probability of some secondary event A, given the occurence of some primary event B. This probability, by definition, is equal to the probability of both events occuring divided by the probability of the primary event occuring. This is represented mathematically by Equation 1.</p>
+            </div>
+        </div>
+        
+        
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-9">
+                <div class="code_well">
+                    \begin{equation}
+                        P(A | B) = \frac{P(A \cap B)}{P(B)}
+                    \end{equation}
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="row">
+            <div class="col-md-1"></div>
+            
+            <div class="col-md-9">
+                Conversely, the probability of the primary event occuring given the fact that the secondary event occured, is given by Equation 2. As you can see, Equation 1 and Equation 2 are very similar - the two events A and B have just been switched.
+            </div>
+        </div>  
+    
+        <div class="row">
+            <div class="col-md-1"></div>
+            
+            <div class="col-md-9">
+                <div class="code_well">
+                    \begin{equation}
+                        P(B | A) = \frac{P(B \cap A)}{P(A)} \Rightarrow P(B \cap A) = P(A) \cdot P(B | A)
+                    \end{equation}
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="row">
+            <div class="col-md-1"></div>
+            
+            <div class="col-md-9">
+                The AND relationship is commutative, meaning that the probability of events A and B occuring is the same as the probability of events B and A occuring. We can relate Equations 1 and 2 using this relationship.
+            </div>
+        </div>  
+
+
+        <div class="row">
+            <div class="col-md-1"></div>
+            
+            <div class="col-md-9">
+                <div class="code_well">
+                    \begin{equation}
+                        P(A | B) = \frac{P(A \cap B)}{P(B)} = \frac{P(B \cap A)}{P(B)} = \frac{P(A) \cdot P(B|A)}{P(B)}
+                    \end{equation}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-1"></div>
+            
+            <div class="col-md-9">
+                Now, let's say that instead of a single event B, we're looking at a specific combination of n different events, represented by $$B_1, B_2, B_3...B_n$$ In that case, Equation 3 would be written as shown in Equation 4.
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-1"></div>
+            
+            <div class="col-md-9">
+                <div class="code_well">
+                    \begin{equation}
+                        P(A | B) = \frac{P(A) \cdot P(B_1 \cap B_2 \cap B_3 \cap ... \cap B_n|A)}{P(B_1 \cap B_2 \cap B_3 \cap ... \cap B_n)}
+                    \end{equation}
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-1"></div>
+            
+            <div class="col-md-9">
+                Here is where we get to the na&iumlve part of the Na&iumlve Bayes. We assume, hopefully not too erroneously, that the separate events $$B_1, B_2, B_3...B_n$$ whose concurrence makes up the event B, are in fact independent of one another. This means that the probability of one event occuring does not affect the chance for any other of the events to occur. Equation 4 thus becomes Equation 5.
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-1"></div>
+            
+            <div class="col-md-9">
+                <div class="code_well">
+                    \begin{equation}
+                        P(A | B) = \frac{P(A) \cdot P(B_1|A) \cdot P(B_2|A) \cdot P(B_3|A) \cdot ... \cdot P(B_n|A)}{P(B_1) \cdot P(B_2) \cdot P(B_3) \cdot ... \cdot P(B_n)} = P(A) \cdot \frac{P(B_1|A)}{P(B_1)} \cdot \frac{P(B_2|A)}{P(B_2)} \cdot \frac{P(B_3|A)}{P(B_3)} \cdot ... \cdot \frac{P(B_n|A)}{P(B_n)}
+                    \end{equation}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-1"></div>
+            
+            <div class="col-md-9">
+                To get a concrete example of what this actually means, we can look at the probability of an email being spam or not given the occurence of certain words or phrases like "You've won" or "send money". This quantity can be calculated using historical data. The percentage of all historical emails that have been (correctly) classified as spam is given by P(Spam). The percentage of those spam emails that contained the phrase "You've won" and those that contained the phrase "Send money" is given by P("You've won" | Spam) and P("Send money" | Spam), respectively. Finally, the percentage of ALL emails containing the phrase "You've won" and the percentage of all emails containing the phrase "Send money" is given by the quantity P("You've won") and P("Send money"), respectively.
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-1"></div>
+            
+            <div class="col-md-9">
+                <div class="code_well">
+                    \begin{equation}
+                        P(Spam\ |\ `You\textrm've\ won\textrm' \cap `Send\ Money\textrm') = P(Spam) \cdot \frac{P(`You\textrm've\ Won\textrm'\ |\ Spam)}{P(`You\textrm've\ won\textrm')} \cdot \frac{P(`Send\ Money\textrm'\ |\ Spam)}{P(`Send\ Money\textrm')}
+                    \end{equation}
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-1"></div>
+            
+            <div class="col-md-9">
+                Just by implementing this simple equation, you can calculate the probability than an email containing these two phrases is spam, based on historical data of word patterns in spam emails. In other words, you can calculate the conditional probability than an email is spam given that it contains the phrases "You've won" and "Send money". In the same fashion, you could calculate the conditional probability than an email with these phrases is not spam (the two values won't add up to 100). You can then classify the email as spam or not spam based on whichever calculated value is higher. 
+            </div>
+        </div>
+
+        <div style="height: 80px"></div>
+
+    </body>
+</html>
